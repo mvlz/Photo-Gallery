@@ -1,38 +1,68 @@
 .App {
   text-align: center;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.container {
+  padding: 0.75rem 0.5rem;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.page-describtion {
+  max-width: 30rem;
+  margin: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 0.5rem;
+}
+.page-describtion span {
+  word-wrap: break-word;
+}
+.cabi-logo {
+  width: 3rem;
+  border-radius: 999px;
+  filter: brightness(0.95);
+}
+.cabi-logo:hover {
+  filter: brightness(0.85);
+  cursor: pointer;
+}
+.similar-offers {
+  display: flex;
+  max-width: 30rem;
+  margin: auto;
+  gap: 0.5rem;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
-
-.App-link {
-  color: #61dafb;
+.offer {
+  background-color: #efefef;
+  border-radius: 999px;
+  padding: 0.25rem;
+  display: flex;
+  align-items: center;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.img-container {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 999px;
+  overflow: hidden;
+}
+.img-container img {
+  width: 100%;
+}
+.offer p {
+  font-weight: 700;
+  font-size: 14px;
+  padding: 0 0.75rem 0 0.5rem;
+}
+@media screen and (max-width: 767.99px) {
+  div.similar-offers,
+  .page-describtion {
+    max-width: 100%;
   }
-  to {
-    transform: rotate(360deg);
+  div.similar-offers {
+    display: flex;
+    margin: auto;
+    gap: 0.5rem;
+    justify-content: start;
+    overflow-x: auto;
+    padding: 0.5rem;
   }
 }
