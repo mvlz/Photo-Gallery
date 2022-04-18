@@ -5,6 +5,7 @@ import { useState } from "react";
 import useProductsFetch from "../../hook/useProductsFetch";
 import ProductComponent from "../product/Product";
 import useSearch from "../../hook/useSearch";
+import Loading from "../../common/loading/Loading";
 
 const ProductsComponent = ({ searchVal }) => {
   const [pageNumber, setPageNumber] = useState(1);
@@ -36,27 +37,29 @@ const ProductsComponent = ({ searchVal }) => {
   );
 
   return (
-    <Masonry
-      breakpointCols={breakpointColumnsObj}
-      className="products-grid"
-      columnClassName="products-grid_column"
-    >
-      {filtered.map((product, index) => {
-        if (filtered.length === index + 1) {
-          return (
-            <ProductComponent
-              ref={lastProductElementRef}
-              product={product}
-              key={index}
-            />
-          );
-        } else {
-          return <ProductComponent product={product} key={index} />;
-        }
-      })}
-      <div>{loading && "Loading..."}</div>
+    <>
+      <Masonry
+        breakpointCols={breakpointColumnsObj}
+        className="products-grid"
+        columnClassName="products-grid_column"
+      >
+        {filtered.map((product, index) => {
+          if (filtered.length === index + 1) {
+            return (
+              <ProductComponent
+                ref={lastProductElementRef}
+                product={product}
+                key={index}
+              />
+            );
+          } else {
+            return <ProductComponent product={product} key={index} />;
+          }
+        })}
+      </Masonry>
+      {loading && <Loading />}
       <div>{error && "Error"}</div>
-    </Masonry>
+    </>
   );
 };
 
