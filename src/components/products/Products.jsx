@@ -1,9 +1,11 @@
+import "./Products.css";
 import { useCallback, useRef } from "react";
 import { useState } from "react";
 import useProductsFetch from "../../hook/useProductsFetch";
+import ProductComponent from "../product/Product";
 
 const ProductsComponent = () => {
-  const [pageNumber, setPageNumber] = useState(20);
+  const [pageNumber, setPageNumber] = useState(1);
 
   const { products, hasMore, loading, error } = useProductsFetch(pageNumber);
 
@@ -21,17 +23,20 @@ const ProductsComponent = () => {
     },
     [loading, hasMore]
   );
+
   return (
-    <div>
+    <div className="products-container">
       {products.map((product, index) => {
         if (products.length === index + 1) {
           return (
-            <div ref={lastProductElementRef} key={product.page_id}>
-              {product.name}
-            </div>
+            <ProductComponent
+              lastProductElementRef={lastProductElementRef}
+              product={product}
+              key={new Date()}
+            />
           );
         } else {
-          return <div key={product.page_id}>{product.name}</div>;
+          return <ProductComponent product={product} key={product.page_id} />;
         }
       })}
       <div>{loading && "Loading..."}</div>
