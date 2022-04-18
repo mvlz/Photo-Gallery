@@ -1,7 +1,9 @@
-.products-container {
+.products-grid {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  padding: 0 0.75rem;
-  position: relative;
+  width: auto;
+}
+.products-grid_column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

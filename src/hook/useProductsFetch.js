@@ -17,7 +17,7 @@ export default function useProductsFetch(pageNumber) {
       cancelToken: new axios.CancelToken(c => cancel = c)
     }).then(res => {
       setProducts(prevProducts => {
-        return [...new Set([...prevProducts, ...res.data])]
+        return [...new Set([...prevProducts, ...res.data.filter(d => d.name)])]
       })
       setHasMore(res.data.length > 0)
       setLoading(false)
