@@ -4,7 +4,7 @@ import { forwardRef } from "react";
 const ProductComponent = forwardRef(({ product }, ref) => (
   <div className="product" ref={ref}>
     <div className="product-img">
-      <img src={product.image_url} alt="" />
+      <img src={product.image_url} alt={product.tags} />
       <a href={product.url} className="hover-box">
         <p>Open</p>
         <h4 className="product-domain">{product.domain}</h4>

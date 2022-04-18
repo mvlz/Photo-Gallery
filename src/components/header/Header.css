@@ -20,6 +20,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 1.25rem;
 }
 .menu {
   display: flex;
@@ -36,4 +37,15 @@
 .menu li:hover {
   background-color: #efefef;
   border-radius: 9999px;
+}
+@media screen and (max-width: 767.99px) {
+  .header {
+    gap: 0.5rem;
+  }
+  .menu li {
+    padding: 0.25rem 0.5rem;
+  }
+  .logo h2 {
+    display: none;
+  }
 }

@@ -1,3 +1,4 @@
+import SearchBox from "../searchBox/SearchBox";
 import "./Header.css";
 const Header = ({ searchVal, setSearchVal }) => {
   function changeHandler(e) {
@@ -15,14 +16,7 @@ const Header = ({ searchVal, setSearchVal }) => {
           </div>
           <h2>Pinterest</h2>
         </div>
-        <div>
-          <input
-            type="text"
-            value={searchVal}
-            placeholder="Search"
-            onChange={changeHandler}
-          />
-        </div>
+        <SearchBox searchVal={searchVal} changeHandler={changeHandler} />
         <ul className="menu">
           <li>
             <a href="">
