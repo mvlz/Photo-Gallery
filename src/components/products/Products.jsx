@@ -43,7 +43,7 @@ const ProductsComponent = () => {
         if (products.length === index + 1) {
           return (
             <ProductComponent
-              lastProductElementRef={lastProductElementRef}
+              ref={lastProductElementRef}
               product={product}
               key={index}
             />
