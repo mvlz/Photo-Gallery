@@ -1,5 +1,8 @@
 import "./Header.css";
-const Header = () => {
+const Header = ({ searchVal, setSearchVal }) => {
+  function changeHandler(e) {
+    setSearchVal(e.target.value);
+  }
   return (
     <div>
       <header className="header">
@@ -11,6 +14,14 @@ const Header = () => {
             />
           </div>
           <h2>Pinterest</h2>
+        </div>
+        <div>
+          <input
+            type="text"
+            value={searchVal}
+            placeholder="Search"
+            onChange={changeHandler}
+          />
         </div>
         <ul className="menu">
           <li>

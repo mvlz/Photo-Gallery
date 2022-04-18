@@ -1,13 +1,16 @@
+import { useState } from 'react';
 import './App.css';
 import Header from './components/header/Header';
 import ProductsComponent from './components/products/Products';
 
 function App() {
+  const [searchVal, setSearchVal] = useState("");
+
   return (
     <div className="App">
-      <Header />
+      <Header setSearchVal={setSearchVal} searchVal={searchVal} />
       <div className='container'>
-        <div>
+        <div className='page-information'>
           <h1>Handbags</h1>
           <div className='page-describtion'>
             <span>The perfect handbags from totes, cross-body bags, satchels to clutches to complement your wardrobe (and beyond).</span>
@@ -16,7 +19,7 @@ function App() {
           <img src="https://pbs.twimg.com/profile_images/624719377825267712/fnipKe2e_400x400.jpg" className='cabi-logo' alt="cabi Clothing logo" />
           <p>Collection by <strong>cabi Clothing</strong></p>
         </div>
-        <div>
+        <div className='offers-content'>
           <h2>Similar ideas popular now</h2>
           <div className='similar-offers'>
             <div className='offer'>
@@ -39,7 +42,7 @@ function App() {
             </div>
           </div>
         </div>
-        <ProductsComponent />
+        <ProductsComponent searchVal={searchVal} />
       </div>
     </div>
   );

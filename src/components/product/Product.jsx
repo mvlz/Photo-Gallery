@@ -12,7 +12,7 @@ const ProductComponent = forwardRef(({ product }, ref) => (
     </div>
     <div className="product-body">
       <p className="product-name">{product.name}</p>
-      <p className="product-desc">{product.describtion}</p>
+      <p className="product-desc">{product.description}</p>
     </div>
   </div>
 ));

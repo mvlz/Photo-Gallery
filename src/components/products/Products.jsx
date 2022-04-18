@@ -4,8 +4,9 @@ import Masonry from "react-masonry-css";
 import { useState } from "react";
 import useProductsFetch from "../../hook/useProductsFetch";
 import ProductComponent from "../product/Product";
+import useSearch from "../../hook/useSearch";
 
-const ProductsComponent = () => {
+const ProductsComponent = ({ searchVal }) => {
   const [pageNumber, setPageNumber] = useState(1);
 
   const { products, hasMore, loading, error } = useProductsFetch(pageNumber);
@@ -17,6 +18,7 @@ const ProductsComponent = () => {
     750: 2,
     450: 1,
   };
+  const { filtered } = useSearch(searchVal, products);
 
   const observer = useRef();
   const lastProductElementRef = useCallback(
@@ -39,8 +41,8 @@ const ProductsComponent = () => {
       className="products-grid"
       columnClassName="products-grid_column"
     >
-      {products.map((product, index) => {
-        if (products.length === index + 1) {
+      {filtered.map((product, index) => {
+        if (filtered.length === index + 1) {
           return (
             <ProductComponent
               ref={lastProductElementRef}
