@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 
-export default function useProductsFetch(pageNumber) {
+export default function useProductsFetch(offsetNumber) {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
   const [products, setProducts] = useState([])
@@ -13,11 +13,11 @@ export default function useProductsFetch(pageNumber) {
     let cancel
     axios({
       method: 'GET',
-      url: `http://xoosha.com/ws/1/test.php?offset=${pageNumber}`,
+      url: `http://xoosha.com/ws/1/test.php?offset=${offsetNumber}`,
       cancelToken: new axios.CancelToken(c => cancel = c)
     }).then(res => {
       setProducts(prevProducts => {
-        return [...new Set([...prevProducts, ...res.data.filter(d => d.name)])]
+        return [...new Set([...prevProducts, ...res.data])]
       })
       setHasMore(res.data.length > 0)
       setLoading(false)
@@ -26,7 +26,7 @@ export default function useProductsFetch(pageNumber) {
       setError(true)
     })
     return () => cancel()
-  }, [pageNumber])
+  }, [offsetNumber])
 
   return { loading, error, products, hasMore }
 }

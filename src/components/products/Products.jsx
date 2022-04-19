@@ -8,9 +8,9 @@ import useSearch from "../../hook/useSearch";
 import Loading from "../../common/loading/Loading";
 
 const ProductsComponent = ({ searchVal }) => {
-  const [pageNumber, setPageNumber] = useState(1);
+  const [offsetNumber, setOffsetNumber] = useState(1);
 
-  const { products, hasMore, loading, error } = useProductsFetch(pageNumber);
+  const { products, hasMore, loading, error } = useProductsFetch(offsetNumber);
   const breakpointColumnsObj = {
     default: 6,
     1440: 5,
@@ -28,7 +28,7 @@ const ProductsComponent = ({ searchVal }) => {
       if (observer.current) observer.current.disconnect();
       observer.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting && hasMore) {
-          setPageNumber((prevPageNumber) => prevPageNumber + 1);
+          setOffsetNumber((prevOffsetNumber) => prevOffsetNumber + 1);
         }
       });
       if (node) observer.current.observe(node);

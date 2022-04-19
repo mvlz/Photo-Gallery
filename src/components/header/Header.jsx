@@ -19,12 +19,20 @@ const Header = ({ searchVal, setSearchVal }) => {
         <SearchBox searchVal={searchVal} changeHandler={changeHandler} />
         <ul className="menu">
           <li>
-            <a href="">
+            <a
+              href="https://github.com/mvlz/photo-gallery"
+              target="_blank"
+              rel="noreferrer"
+            >
               <h3>Github</h3>
             </a>
           </li>
           <li>
-            <a href="">
+            <a
+              href="https://github.com/mvlz/photo-gallery/blob/main/README.md"
+              target="_blank"
+              rel="noreferrer"
+            >
               <h3>Docs</h3>
             </a>
           </li>
