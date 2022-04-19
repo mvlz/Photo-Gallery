@@ -1,70 +1,116 @@
-# Getting Started with Create React App
+# Photo Gallery
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The project was part of a job interview and involved the use of API to display information in a [Pinterest-style](https://www.pinterest.com/cabiclothing/handbags/) layout.
 
-## Available Scripts
+I completed all requirements such as responsiveness, infinite scrolling pagination, and client-side search.
 
-In the project directory, you can run:
+This project was developed using React.js. It was challenging to implement Masonry layout and client-side search, so I used the Masonry library for layout and wrote a custom hook to handle the search functionality.
 
-### `npm start`
+## Demo
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+You can see the project demo [here](https://photo-gallery-mu.vercel.app/).
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Installation
 
-### `npm test`
+Install my project with npm, in the project directory, you can run:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+  npm install
+```
 
-### `npm run build`
+## Documentation
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### useProductsFetch
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```javascript
+export default function useProductsFetch(offsetNumber) {
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const [products, setProducts] = useState([]);
+  const [hasMore, setHasMore] = useState(false);
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+  useEffect(() => {
+    setLoading(true);
+    setError(false);
+    let cancel;
 
-### `npm run eject`
+    axios({
+      method: "GET",
+      url: `http://xoosha.com/ws/1/test.php?offset=${offsetNumber}`,
+      cancelToken: new axios.CancelToken((c) => (cancel = c)),
+    })
+      .then((res) => {
+        setProducts((prevProducts) => {
+          return [...new Set([...prevProducts, ...res.data])];
+        });
+        setHasMore(res.data.length > 0);
+        setLoading(false);
+      })
+      .catch((e) => {
+        if (axios.isCancel(e)) return;
+        setError(true);
+      });
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+    return () => cancel();
+  }, [offsetNumber]);
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+  return { loading, error, products, hasMore };
+}
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+#### Description
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Data is fetched for infinite scrolling by this hook. Various states are stored and updated depending on API responses. `products`, `loading`, and `error` are displayed on DOM based on request status, and infinite scroll functionality is provided by `hasMore` and `loading`\.
 
-## Learn More
+#### Parameters
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+The `offsetNumber` is a state with a default number 1 and it's passed as an argument that increases when the `hasMore` or the `loading` changes, we understand changes of these two by using `useRef` and `useCallback` hooks\.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+#### Returns
 
-### Code Splitting
+`loading`, `error`, `products` and `hasMore` are the hook outputs\.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### useSearch
 
-### Analyzing the Bundle Size
+```javascript
+export default function useSearch(searchItem, products) {
+  const [filtered, setFiltered] = useState([]);
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+  useEffect(() => {
+    const searchHandler = (search) => {
+      if (!search || search === "") {
+        setFiltered(products);
+      } else {
+        const filteredProducts = [
+          ...new Set(
+            products.filter((p) => p.description.toLowerCase().includes(search))
+          ),
+        ];
+        setFiltered(filteredProducts);
+      }
+    };
+    searchHandler(searchItem);
+  }, [searchItem, products]);
+  return { filtered };
+}
+```
 
-### Making a Progressive Web App
+#### Description
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Essentially, if there is no `searchItem`, or if `searchItem` is an empty string, in other words, if the client did not search for anything, `products` updates the `filtered` state directly. But if `searchItem` exists, the hook filters `products` based on `description` data and updates the state.
 
-### Advanced Configuration
+#### Parameters
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+The `searchItem` is a state and it's passed as an argument, it is updated with `onChange` event on the search input (controlled component).
 
-### Deployment
+And the `products` is the output of `useProductsFetch` hook.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+#### Returns
 
-### `npm run build` fails to minify
+The `filtered` state is an output that is rendered on DOM instead of `products`\.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Appendix
+
+Here is the [Masonry library](https://bestofreactjs.com/repo/paulcollett-react-masonry-css-react-react-integration) that I used in the project.
+
+Here is the [Infinite Scrolling With React](https://www.youtube.com/watch?v=NZKUirTtxcg) tutorial that helped me.
