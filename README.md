@@ -12,12 +12,15 @@ You can see the project demo [here](https://photo-gallery-mu.vercel.app/).
 
 ## Installation
 
-Install my project with npm, in the project directory, you can run:
+In the project directory, you can run:
 
 ```bash
   npm install
 ```
-
+Start the application
+```bash
+  npm start
+```
 ## Documentation
 
 ### useProductsFetch
@@ -111,6 +114,6 @@ The `filtered` state is an output that is rendered on DOM instead of `products`\
 
 ## Appendix
 
-Here is the [Masonry library](https://bestofreactjs.com/repo/paulcollett-react-masonry-css-react-react-integration) that I used in the project.
+[Masonry library](https://bestofreactjs.com/repo/paulcollett-react-masonry-css-react-react-integration)
 
-Here is the [Infinite Scrolling With React](https://www.youtube.com/watch?v=NZKUirTtxcg) tutorial that helped me.
+[Infinite Scrolling With React - Tutorial](https://www.youtube.com/watch?v=NZKUirTtxcg)
