@@ -10,17 +10,20 @@ This project was developed using React.js. It was challenging to implement Mason
 
 You can see the project demo [here](https://photo-gallery-mu.vercel.app/).
 
-## Installation
+## Run Locally
 
-In the project directory, you can run:
+After cloning the project, go to the project directory and install the dependencies
 
 ```bash
   npm install
 ```
-Start the application
+
+Then start the server
+
 ```bash
   npm start
 ```
+Open http://localhost:3000 with your browser to see the result.
 ## Documentation
 
 ### useProductsFetch
